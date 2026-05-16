@@ -18,7 +18,7 @@ COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Build Backend
-FROM openjdk:21-jdk-slim AS backend-build
+FROM openjdk:17-jdk-slim AS backend-build
 
 # Set working directory for backend
 WORKDIR /app/backend
