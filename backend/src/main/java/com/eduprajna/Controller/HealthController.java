@@ -18,7 +18,7 @@ public class HealthController {
         response.put("timestamp", System.currentTimeMillis());
         return response;
     }
-    GetMapping("/")
+     @GetMapping("/")
     public String home() {
         return "Backend is running";
     }
