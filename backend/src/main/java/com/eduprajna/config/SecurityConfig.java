@@ -82,25 +82,28 @@ public class SecurityConfig {
     }
 
     // -------------------- CORS CONFIGURATION (MAIN FIX) --------------------
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+  @Bean
+public CorsConfigurationSource corsConfigurationSource() {
 
-        CorsConfiguration config = new CorsConfiguration();
+    CorsConfiguration config = new CorsConfiguration();
 
-        // EXACT frontend origin
-        config.setAllowedOrigins(List.of(
-                "http://56.228.81.193"));
+    config.setAllowedOrigins(List.of(
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "http://56.228.81.193"
+    ));
 
-        config.setAllowedMethods(List.of(
-                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+    config.setAllowedMethods(List.of(
+            "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
+    ));
 
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
-        config.setMaxAge(3600L);
+    config.setAllowedHeaders(List.of("*"));
+    config.setAllowCredentials(true);
+    config.setMaxAge(3600L);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config);
 
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+    return source;
+}
 }
