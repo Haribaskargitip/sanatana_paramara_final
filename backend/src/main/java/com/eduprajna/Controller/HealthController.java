@@ -10,6 +10,11 @@ import java.util.Map;
 @RequestMapping("/api")
 public class HealthController {
 
+      @GetMapping("/")
+    public String home() {
+        return "Backend is running";
+    }
+
     @GetMapping("/health")
     public Map<String, Object> health() {
         Map<String, Object> response = new HashMap<>();
@@ -18,9 +23,6 @@ public class HealthController {
         response.put("timestamp", System.currentTimeMillis());
         return response;
     }
-     @GetMapping("/")
-    public String home() {
-        return "Backend is running";
-    }
+   
 
 }
