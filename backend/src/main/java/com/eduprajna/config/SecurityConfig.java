@@ -63,8 +63,10 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
 
                 // Enable CORS (THIS IS CRITICAL)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
+               .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+.headers(headers -> headers
+    .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'"))
+)
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
                         // ✅ VERY IMPORTANT: allow preflight
