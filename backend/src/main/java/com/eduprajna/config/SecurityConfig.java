@@ -70,7 +70,7 @@ public class SecurityConfig {
 
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ VERY IMPORTANT: allow preflight
+                        //VERY IMPORTANT: allow preflight
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // Auth endpoints
