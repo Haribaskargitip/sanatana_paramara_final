@@ -97,7 +97,8 @@ public String uploadImage(MultipartFile file) {
 
         return uploadResult.get("url").toString();
     } catch (Exception e) {
-        throw new RuntimeException("Cloudinary upload failed");
-    }
+    e.printStackTrace();
+    throw new RuntimeException("Cloudinary upload failed: " + e.getMessage());
+}
 }
 }
