@@ -71,8 +71,8 @@ public class ProductController {
             @RequestPart("product") Product p,
             @RequestParam(value = "image", required = false) MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()) {
-            String relativePath = storageService.store(imageFile);
-            p.setImageUrl(relativePath);
+          String cloudinaryUrl = productService.uploadImage(imageFile);
+p.setImageUrl(cloudinaryUrl);
         }
         Product saved = productService.save(p);
         return ResponseEntity.ok(saved);
@@ -93,8 +93,8 @@ public class ProductController {
             @RequestParam(value = "image", required = false) MultipartFile imageFile) throws IOException {
         p.setId(id);
         if (imageFile != null && !imageFile.isEmpty()) {
-            String relativePath = storageService.store(imageFile);
-            p.setImageUrl(relativePath);
+           String cloudinaryUrl = productService.uploadImage(imageFile);
+p.setImageUrl(cloudinaryUrl);
         }
         return ResponseEntity.ok(productService.save(p));
     }
@@ -161,8 +161,8 @@ public class ProductController {
                         storageService.delete(oldFilename);
                     }
                 }
-                String relativePath = storageService.store(imageFile);
-                product.setImageUrl(relativePath);
+               String cloudinaryUrl = productService.uploadImage(imageFile);
+product.setImageUrl(cloudinaryUrl);
                 productService.save(product);
             }
             return ResponseEntity.ok(product);
