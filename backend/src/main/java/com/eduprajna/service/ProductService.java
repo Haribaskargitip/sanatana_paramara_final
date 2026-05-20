@@ -95,7 +95,7 @@ public String uploadImage(MultipartFile file) {
         Map<?, ?> uploadResult = cloudinary.uploader()
                 .upload(file.getBytes(), ObjectUtils.emptyMap());
 
-        return uploadResult.get("url").toString();
+        return uploadResult.get("secure_url").toString();
     } catch (Exception e) {
     e.printStackTrace();
     throw new RuntimeException("Cloudinary upload failed: " + e.getMessage());
