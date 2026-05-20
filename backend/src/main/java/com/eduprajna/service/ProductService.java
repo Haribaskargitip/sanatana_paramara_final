@@ -2,6 +2,11 @@ package com.eduprajna.service;
 
 import java.util.List;
 
+import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +36,9 @@ public class ProductService {
 
     @Autowired
     private WishlistItemRepository wishlistItemRepository;
+
+	@Autowired
+    private Cloudinary cloudinary;
 
     // Fetch all product variants (for admin and user)
     public List<ProductVariant> getAllVariants() {
@@ -81,4 +89,15 @@ public class ProductService {
     public void deleteVariant(Long variantId) {
         productVariantRepository.deleteById(variantId);
     }
+
+public String uploadImage(MultipartFile file) {
+    try {
+        Map<?, ?> uploadResult = cloudinary.uploader()
+                .upload(file.getBytes(), ObjectUtils.emptyMap());
+
+        return uploadResult.get("url").toString();
+    } catch (Exception e) {
+        throw new RuntimeException("Cloudinary upload failed");
+    }
+}
 }
