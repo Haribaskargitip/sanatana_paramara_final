@@ -90,15 +90,25 @@ public class ProductService {
         productVariantRepository.deleteById(variantId);
     }
 
-public String uploadImage(MultipartFile file) {
+@PostMapping(consumes = {"multipart/form-data"})
+public ResponseEntity<?> create(
+        @RequestParam("product") String productJson,
+        @RequestParam(value = "image", required = false) MultipartFile imageFile) {
     try {
-        Map<?, ?> uploadResult = cloudinary.uploader()
-                .upload(file.getBytes(), ObjectUtils.emptyMap());
+        ObjectMapper mapper = new ObjectMapper();
+        Product p = mapper.readValue(productJson, Product.class);
 
-        return uploadResult.get("secure_url").toString();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String cloudinaryUrl = productService.uploadImage(imageFile);
+            p.setImageUrl(cloudinaryUrl);
+        }
+
+        Product saved = productService.save(p);
+        return ResponseEntity.ok(saved);
+
     } catch (Exception e) {
-    e.printStackTrace();
-    throw new RuntimeException("Cloudinary upload failed: " + e.getMessage());
-}
+        e.printStackTrace();
+        return ResponseEntity.status(500).body(e.getMessage());
+    }
 }
 }
