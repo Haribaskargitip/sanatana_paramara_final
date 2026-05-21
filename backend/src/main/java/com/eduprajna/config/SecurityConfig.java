@@ -104,7 +104,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of(
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "https://sanatana-paramara-final.vercel.app"
+                "https://sanatana-paramara-final-ma9b.vercel.app"
         ));
 
         config.setAllowedMethods(List.of(
