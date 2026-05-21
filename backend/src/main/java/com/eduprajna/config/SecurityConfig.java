@@ -64,8 +64,11 @@ public class SecurityConfig {
 
                 // Enable CORS (THIS IS CRITICAL)
                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-.headers(headers -> headers
-    .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'"))
+.headers(headers -> 
+    headers.contentSecurityPolicy(csp -> 
+        csp.policyDirectives("default-src 'self'")
+    )
+)
 )
 
                 // Authorization rules
