@@ -30,87 +30,103 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-    // -------------------- Password Encoder --------------------
+    // -------------------- PASSWORD ENCODER --------------------
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // -------------------- Authentication Manager --------------------
+    // -------------------- AUTHENTICATION MANAGER --------------------
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration) throws Exception {
+
         return configuration.getAuthenticationManager();
     }
 
-    // -------------------- Authentication Provider --------------------
+    // -------------------- AUTHENTICATION PROVIDER --------------------
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider();
+
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
+
         return provider;
     }
 
     // -------------------- SECURITY FILTER CHAIN --------------------
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http)
+            throws Exception {
 
         http
-                // Disable defaults we don't need
+                // Disable unnecessary security defaults
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
 
-                // Enable CORS (THIS IS CRITICAL)
-               .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-.headers(headers -> 
-    headers.contentSecurityPolicy(csp -> 
-        csp.policyDirectives("default-src 'self'")
-    )
-)
-)
+                // Enable CORS
+                .cors(cors ->
+                        cors.configurationSource(corsConfigurationSource())
+                )
 
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
-                        //VERY IMPORTANT: allow preflight
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                        // Auth endpoints
-                        .requestMatchers("/api/auth/**").permitAll()
+                        // Allow preflight requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**")
+                        .permitAll()
 
-                        // Other APIs (you can tighten later)
-                        .anyRequest().permitAll())
+                        // Public auth APIs
+                        .requestMatchers("/api/auth/**")
+                        .permitAll()
 
+                        // Allow all other APIs
+                        .anyRequest()
+                        .permitAll()
+                )
+
+                // Authentication provider
                 .authenticationProvider(authenticationProvider());
 
         return http.build();
     }
 
-    // -------------------- CORS CONFIGURATION (MAIN FIX) --------------------
-   @Bean
-public CorsConfigurationSource corsConfigurationSource() {
+    // -------------------- CORS CONFIGURATION --------------------
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
 
-    CorsConfiguration config = new CorsConfiguration();
+        CorsConfiguration config = new CorsConfiguration();
 
-    config.setAllowedOrigins(List.of(
-            "http://localhost:5173",
-            "http://localhost:3000",
-            "http://56.228.81.193"
-         "https://sanatana-paramara-final.vercel.app"
-    ));
+        config.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "http://localhost:3000",
+                "https://sanatana-paramara-final.vercel.app"
+        ));
 
-    config.setAllowedMethods(List.of(
-            "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
-    ));
+        config.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "OPTIONS",
+                "PATCH"
+        ));
 
-    config.setAllowedHeaders(List.of("*"));
-    config.setAllowCredentials(true);
-    config.setMaxAge(3600L);
+        config.setAllowedHeaders(List.of("*"));
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
+        config.setAllowCredentials(true);
 
-    return source;
-}
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
+    }
 }
