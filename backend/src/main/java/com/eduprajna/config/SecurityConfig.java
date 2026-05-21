@@ -94,6 +94,7 @@ public CorsConfigurationSource corsConfigurationSource() {
             "http://localhost:5173",
             "http://localhost:3000",
             "http://56.228.81.193"
+         "https://sanatana-paramara-final.vercel.app"
     ));
 
     config.setAllowedMethods(List.of(
