@@ -12,11 +12,10 @@ const desktopImages = [
 
 ];
 const mobileImages = [
-     '/assets/banner/1.png',
-    '/assets/banner/2.png',
-    '/assets/banner/3.png',
-    '/assets/banner/4.png',
-    '/assets/banner/5.png'
+    '/assets/banner/mobilefirst.png',
+    '/assets/banner/mobileseccond.png',
+    '/assets/banner/mobilethird.png',
+    '/assets/banner/mobilefourth.png'
 
 ];
 
