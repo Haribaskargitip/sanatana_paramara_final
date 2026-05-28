@@ -57,7 +57,7 @@ const EdibleOilsSection = () => {
                             className="flex flex-col bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer group"
                             style={{ textDecoration: 'none' }}
                         >
-                            <div className="flex-1 w-full aspect-[4/5] bg-gray-100 flex items-center justify-center overflow-hidden">
+                            <div className="flex-1 w-full aspect-[2/3] bg-gray-100 flex items-center justify-center overflow-hidden">
                                 <img
                                     src={oil.img}
                                     alt={oil.name}

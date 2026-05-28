@@ -233,93 +233,150 @@ const ProductCard = ({
             </Button>
           </div>
         </div>
-        {/* Product Info */}
-        <div className="p-4 space-y-3 flex-grow flex flex-col">
-          {/* Product Name */}
-          <h3 className="font-body font-medium text-foreground hover:text-primary transition-colors duration-200 line-clamp-2 min-h-[2.5rem]">
-            {product?.name}
-          </h3>
+     {/* Product Info */}
+<div className="p-4 flex flex-col flex-grow">
 
-          {/* Rating */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              {renderStars(product?.rating)}
-            </div>
-            <span className="font-caption text-xs text-muted-foreground">
-              ({product?.reviewCount})
-            </span>
-          </div>
+  {/* Name Section */}
+  <div className="mb-3">
+    <h3 className="font-body font-semibold text-lg text-foreground line-clamp-2">
+      {product?.name}
+    </h3>
+  </div>
 
-          <div className="flex-grow space-y-3">
-            {/* Variant Selection */}
-            {product?.variants && product?.variants?.length > 1 ? (
-              <div className="space-y-2">
-                <span className="font-caption text-xs text-muted-foreground">Weight:</span>
-                <div className="flex flex-wrap gap-1">
-                  {product?.variants?.map((variant, index) => (
-                    <button
-                      key={index}
-                      onClick={(e) => { e.preventDefault(); setSelectedVariant(variant); }}
-                      className={`px-2 py-1 text-xs font-caption rounded border transition-colors duration-200 ${
-                        selectedVariant?.weight === variant?.weight
-                          ? 'border-primary bg-primary text-primary-foreground'
-                          : 'border-border bg-background text-foreground hover:border-primary'
-                      }`}
-                    >
-                      {variant?.weight || (variant?.weightValue + (variant?.weightUnit || ''))}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                <span className="font-caption text-xs text-muted-foreground">Weight:</span>
-                <div className="font-caption text-sm text-foreground">
-                  {selectedVariant?.weight || (selectedVariant?.weightValue + (selectedVariant?.weightUnit || '')) || 'N/A'}
-                </div>
-              </div>
-            )}
+  {/* Rating Section */}
+  <div className="flex items-center gap-2 mb-3">
+    <div className="flex items-center gap-1">
+      {renderStars(product?.rating)}
+    </div>
 
-            {/* Price */}
-            <div className="space-y-2">
-              <div className="flex items-baseline gap-2">
-              <span className="font-data font-bold text-lg text-foreground">
-                ₹{(parseFloat(selectedVariant?.salePrice || selectedVariant?.price || product?.salePrice || product?.price) || 0).toFixed(2)}
-              </span>
-              {originalPrice && originalPrice > currentPrice && (
-                <span className="font-data text-sm text-muted-foreground line-through">
-                  ₹{originalPrice?.toFixed(2)}
-                </span>
-              )}
-            </div>
-            {savings > 0 && (
-              <div className="flex items-center justify-between">
-                <span className="font-caption text-xs font-medium text-success bg-success/10 px-2 py-0.5 rounded-full">
-                  {Math.round(((originalPrice - currentPrice) / originalPrice) * 100)}% OFF
-                </span>
-                <p className="font-caption text-xs text-success font-medium">
-                  You save ₹{(originalPrice - currentPrice)?.toFixed(2)}
-                </p>
-              </div>
-            )}
-          </div>
+    <span className="text-xs text-muted-foreground">
+      ({product?.reviewCount})
+    </span>
+  </div>
+
+  {/* Variant Section */}
+  <div className="mb-4">
+
+    {product?.variants && product?.variants?.length > 1 ? (
+      <div className="space-y-2">
+
+        <span className="text-xs text-muted-foreground font-medium">
+          Weight
+        </span>
+
+        <div className="flex flex-wrap gap-2">
+          {product?.variants?.map((variant, index) => (
+            <button
+              key={index}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedVariant(variant);
+              }}
+              className={`px-3 py-1 text-xs rounded-md border transition ${
+                selectedVariant?.weight === variant?.weight
+                  ? 'bg-primary text-white border-primary'
+                  : 'bg-white text-gray-700 border-gray-300 hover:border-primary'
+              }`}
+            >
+              {variant?.weight ||
+                (variant?.weightValue + (variant?.weightUnit || ''))}
+            </button>
+          ))}
         </div>
 
-        {/* Add to Cart Button */}
-        <div className="mt-auto">
-          <Button
-            variant="default"
-            fullWidth
-            onClick={selectedVariant ? handleAddToCartWithVariant : handleAddToCart}
-            disabled={!inStock}
-            iconName="ShoppingCart"
-            iconPosition="left"
-            iconSize={16}
-          >
-            {inStock ? 'Add to Cart' : 'Out of Stock'}
-          </Button>
-        </div>
       </div>
+    ) : (
+      <div>
+
+        <span className="text-xs text-muted-foreground font-medium block mb-1">
+          Weight
+        </span>
+
+        <span className="text-sm text-foreground">
+          {selectedVariant?.weight ||
+            (selectedVariant?.weightValue +
+              (selectedVariant?.weightUnit || '')) ||
+            'N/A'}
+        </span>
+
+      </div>
+    )}
+  </div>
+
+  {/* Price Section */}
+  <div className="mb-4">
+
+    <div className="flex items-center gap-2">
+
+      <span className="text-2xl font-bold text-foreground">
+        ₹{(
+          parseFloat(
+            selectedVariant?.salePrice ||
+              selectedVariant?.price ||
+              product?.salePrice ||
+              product?.price
+          ) || 0
+        ).toFixed(2)}
+      </span>
+
+      {originalPrice && originalPrice > currentPrice && (
+        <span className="text-sm text-muted-foreground line-through">
+          ₹{originalPrice?.toFixed(2)}
+        </span>
+      )}
+
+    </div>
+
+    {savings > 0 && (
+      <div className="mt-2 flex items-center justify-between">
+
+        <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full">
+          {Math.round(
+            ((originalPrice - currentPrice) / originalPrice) * 100
+          )}
+          % OFF
+        </span>
+
+        <span className="text-xs text-green-700 font-medium">
+          Save ₹{(originalPrice - currentPrice)?.toFixed(2)}
+        </span>
+
+      </div>
+    )}
+  </div>
+
+  {/* Buttons Section */}
+  <div className="mt-auto pt-4 space-y-2">
+
+    {/* View Product Button */}
+    <Link
+      to={`/product-detail-page/${product?.id}`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-md font-medium transition duration-200">
+        View Product
+      </button>
+    </Link>
+
+    {/* Add To Cart Button */}
+    <Button
+      variant="default"
+      fullWidth
+      onClick={
+        selectedVariant
+          ? handleAddToCartWithVariant
+          : handleAddToCart
+      }
+      disabled={!inStock}
+      iconName="ShoppingCart"
+      iconPosition="left"
+      iconSize={16}
+    >
+      {inStock ? 'Add to Cart' : 'Out of Stock'}
+    </Button>
+
+  </div>
+</div>
     </div>
   );
 };

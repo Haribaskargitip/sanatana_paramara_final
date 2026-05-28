@@ -114,7 +114,7 @@ const AboutPage = () => {
                   <img
                     src="/assets/images/store.jpg"
                     alt="Sanatana Parampare Store"
-                    className="w-full h-80 object-cover"
+                    className="w-full h-90 object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
                 </div>

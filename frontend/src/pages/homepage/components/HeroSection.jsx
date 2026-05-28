@@ -45,7 +45,7 @@ const HeroSection = () => {
     const prevSlide = () => setCurrent((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
 
     return (
-        <section className="relative h-[85vh] md:h-[90vh] overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/5">
+        <section className="relative h-[105vh] md:h-[110vh] overflow-hidden flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/5">
             <img
                 src={sliderImages[current]}
                 alt={`Hero Slide ${current + 1}`}

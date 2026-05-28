@@ -71,51 +71,57 @@ const FeaturedProductsSection = ({ onAddToCart }) => {
   };
 
   // Fetch products for each category on mount
-  useEffect(() => {
-    const fetchAllProducts = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const productsData = {};
+useEffect(() => {
+  const fetchAllProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const productsData = {};
 
-        // Fetch for each category
-        for (const category of categories) {
-          try {
-            let params = { limit: 4 };
+      // Fetch for each category
+      for (const category of categories) {
+        try {
+          let params = { limit: 4 };
 
-            // Add filters based on category
-            if (category.filter.category) {
-              params.category = category.filter.category;
-            }
-            if (category.filter.sort) {
-              params.sort = category.filter.sort;
-            }
-            if (category.filter.minDiscount) {
-              params.discount = category.filter.minDiscount;
-            }
-
-            const categoryProducts = await productApi.getAll(params);
-            productsData[category.id] = Array.isArray(categoryProducts)
-              ? categoryProducts.map(prod => mapProductData(prod, category.name))
-              : [];
-          } catch (err) {
-            console.error(`Failed to fetch ${category.name}:`, err);
-            productsData[category.id] = [];
+          // Add filters based on category
+          if (category.filter.category) {
+            params.category = category.filter.category;
           }
+
+          if (category.filter.sort) {
+            params.sort = category.filter.sort;
+          }
+
+          if (category.filter.minDiscount) {
+            params.discount = category.filter.minDiscount;
+          }
+
+          const categoryProducts = await productApi.getAll(params);
+
+          productsData[category.id] = Array.isArray(categoryProducts)
+            ? categoryProducts.map(prod =>
+                mapProductData(prod, category.name)
+              )
+            : [];
+
+        } catch (err) {
+          console.error(`Failed to fetch ${category.name}:`, err);
+          productsData[category.id] = [];
         }
-
-        setProducts(productsData);
-      } catch (err) {
-        console.error('Error fetching featured products:', err);
-        setError(err.message || 'Failed to load featured products');
-      } finally {
-        setLoading(false);
       }
-    };
 
-    fetchAllProducts();
-  }, []);
+      setProducts(productsData);
 
+    } catch (err) {
+      console.error('Error fetching featured products:', err);
+      setError(err.message || 'Failed to load featured products');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchAllProducts();
+}, []);
   const activeProducts = (products[activeCategory] || []).slice(0, 4);
 
   // Get selected variant for a product (or default to first variant)
@@ -150,6 +156,7 @@ const FeaturedProductsSection = ({ onAddToCart }) => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
+
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="font-heading text-4xl font-bold text-primary mb-4">
@@ -232,10 +239,10 @@ const FeaturedProductsSection = ({ onAddToCart }) => {
                 return (
                   <div
                     key={product.id}
-                    className="flex-shrink-0 w-[280px] sm:w-[320px] group bg-white rounded-2xl shadow-lg border border-border hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+                    className="flex-shrink-0 w-[320px] bg-white rounded-2xl shadow-lg border border-border hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden flex flex-col"
                   >
                     {/* Product Image */}
-                    <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-muted/20 to-muted/40">
+                   <div className="relative h-[250px] overflow-hidden bg-gradient-to-br from-muted/20 to-muted/40">
                       <img
                         src={product.image}
                         alt={product.name}
@@ -288,16 +295,16 @@ const FeaturedProductsSection = ({ onAddToCart }) => {
                     </div>
 
                     {/* Product Info */}
-                    <div className="p-5">
-                      <div className="mb-3">
-                        <h3 className="font-heading text-lg font-semibold text-foreground mb-1 line-clamp-2">
+                   <div className="p-5 flex flex-col flex-grow"> 
+                      <div className="mb-1">
+                       <h3 className="font-heading text-lg font-semibold text-foreground mb-2 min-h-[56px] line-clamp-2">
                           {product.name}
                         </h3>
                         <p className="text-sm text-muted-foreground">{product.category}</p>
                       </div>
 
                       {/* Rating */}
-                      <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center gap-2 mb-1">
                         <div className="flex items-center">
                           {[...Array(5)].map((_, i) => (
                             <Icon
@@ -318,7 +325,7 @@ const FeaturedProductsSection = ({ onAddToCart }) => {
 
                       {/* Weight Options */}
                       {product.variants && product.variants.length > 0 && (
-                        <div className="mb-3">
+                        <div className="mb-1">
                           <p className="text-xs font-medium text-muted-foreground mb-2">Weight:</p>
                           <div className="flex flex-wrap gap-2">
                             {product.variants.slice(0, 5).map((variant, idx) => {
@@ -341,7 +348,7 @@ const FeaturedProductsSection = ({ onAddToCart }) => {
                       )}
 
                       {/* Price */}
-                      <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center justify-between mt-4 mb-4">
                         <div className="flex items-center gap-2">
                           <span className="font-heading text-xl font-bold text-primary">
                             ₹{currentPrice}
@@ -358,7 +365,7 @@ const FeaturedProductsSection = ({ onAddToCart }) => {
                       </div>
 
                       {/* Actions */}
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 mt-auto pt-1">
                         <Link
                           to={`/product-detail-page/${product.id}`}
                           className="flex-1 bg-primary/10 text-primary text-center py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300"

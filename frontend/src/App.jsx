@@ -110,6 +110,35 @@ function App() {
                   />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
+                <a
+  href="https://wa.me/919902523333?text=Hi%20I%20want%20to%20know%20about%20your%20products"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="fixed bottom-5 right-5 z-[9999] group"
+>
+  <div className="relative">
+    
+    {/* Pulse Animation */}
+    <span className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-30"></span>
+
+    {/* Main Button */}
+    <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-emerald-700 flex items-center justify-center shadow-xl border-4 border-white hover:scale-110 transition-all duration-300">
+
+      {/* WhatsApp Icon */}
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+        alt="WhatsApp"
+        className="w-8 h-8"
+      />
+    </div>
+
+    {/* Tooltip */}
+    <div className="absolute right-20 top-1/2 -translate-y-1/2 bg-black text-white text-sm px-3 py-2 rounded-lg opacity-0 group-hover:opacity-110 transition-all duration-300 whitespace-nowrap">
+      Chat With Us
+    </div>
+  </div>
+</a>
+
               </ErrorBoundary>
             </div>
           </CartProvider>
