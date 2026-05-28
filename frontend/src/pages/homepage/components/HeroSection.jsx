@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 
 const desktopImages = [
-    '/assets/banner/second.png',
+    '/assets/banner/1.png',
+    '/assets/banner/2.png',
     '/assets/banner/3.png',
     '/assets/banner/4.png',
-    '/assets/banner/5.png',
-    '/assets/banner/6.png'
+    '/assets/banner/5.png'
 
 
 ];
