@@ -1,5 +1,4 @@
 
-
 import React, { useState, useEffect } from 'react';
 
 const desktopImages = [
@@ -49,7 +48,16 @@ const HeroSection = () => {
             <img
                 src={sliderImages[current]}
                 alt={`Hero Slide ${current + 1}`}
-                className="w-full h-full object-cover transition-all duration-1000 absolute inset-0"
+               className="
+    w-full
+    h-[70vh]
+    md:h-[110vh]
+    object-cover
+    transition-all
+    duration-1000
+    absolute
+    inset-0
+"
                 style={{ zIndex: 1 }}
             />
             {/* Navigation Arrows */}
