@@ -8,15 +8,12 @@ const desktopImages = [
     '/assets/banner/4.png',
     '/assets/banner/5.png',
     '/assets/banner/6.png'
-
-
 ];
 const mobileImages = [
     '/assets/banner/mobilefirst.png',
     '/assets/banner/mobileseccond.png',
     '/assets/banner/mobilethird.png',
     '/assets/banner/mobilefourth.png'
-
 ];
 
 function useIsMobile() {
@@ -49,16 +46,7 @@ const HeroSection = () => {
             <img
                 src={sliderImages[current]}
                 alt={`Hero Slide ${current + 1}`}
-               className="
-    w-full
-    h-[70vh]
-    md:h-[110vh]
-    object-cover
-    transition-all
-    duration-1000
-    absolute
-    inset-0
-"
+               className="w-full h-[70vh]md:h-[110vh]object-covertransition-allduration-1000absoluteinset-0"
                 style={{ zIndex: 1 }}
             />
             {/* Navigation Arrows */}
