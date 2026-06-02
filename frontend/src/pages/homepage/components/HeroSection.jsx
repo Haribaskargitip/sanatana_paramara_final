@@ -49,11 +49,11 @@ const HeroSection = () => {
             <img
                 src={sliderImages[current]}
                 alt={`Hero Slide ${current + 1}`}
-className="
+               className="
     w-full
-    h-full
+    h-[70vh]
+    md:h-[110vh]
     object-cover
-    object-center
     transition-all
     duration-1000
     absolute
