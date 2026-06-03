@@ -253,29 +253,31 @@ const OrderReview = ({
         )}
 
         {/* Action Buttons */}
-        <div className="flex justify-between pt-6">
+       <div className="flex flex-col md:flex-row gap-3 md:justify-between pt-6">
           <Button
-            type="button"
-            variant="outline"
-            onClick={() => onBack && onBack(3)}
-            iconName="ArrowLeft"
-            iconPosition="left"
-            disabled={isProcessing}
-          >
-            Back to Payment
-          </Button>
-          <Button
-            type="button"
-            variant="default"
-            onClick={handlePlaceOrder}
-            loading={isProcessing}
-            iconName="CheckCircle"
-            iconPosition="right"
-            className="min-w-[160px] h-12 text-base shadow-lg animate-pulse-subtle"
-            disabled={isProcessing}
-          >
-            {isProcessing ? 'Processing...' : 'Place Order'}
-          </Button>
+  type="button"
+  variant="outline"
+  onClick={() => onBack && onBack(3)}
+  iconName="ArrowLeft"
+  iconPosition="left"
+  disabled={isProcessing}
+  className="w-full md:w-auto"
+>
+  Back to Payment
+</Button>
+
+<Button
+  type="button"
+  variant="default"
+  onClick={handlePlaceOrder}
+  loading={isProcessing}
+  iconName="CheckCircle"
+  iconPosition="right"
+  className="w-full md:w-auto md:min-w-[160px] h-12 text-base shadow-lg animate-pulse-subtle"
+  disabled={isProcessing}
+>
+  {isProcessing ? 'Processing...' : 'Place Order'}
+</Button>
         </div>
       </div>
     </div>

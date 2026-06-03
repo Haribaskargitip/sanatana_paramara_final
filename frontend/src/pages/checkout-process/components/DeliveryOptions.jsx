@@ -201,27 +201,30 @@ const DeliveryOptions = ({ onNext, onBack, shippingAddress, user: parentUser, is
           </div>
         </div>
 
-        <div className="flex justify-between pt-6">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-0 justify-between pt-6">  
           <Button
-            type="button"
-            variant="outline"
-            onClick={onBack}
-            iconName="ArrowLeft"
-            iconPosition="left"
-            disabled={isLoading}
-          >
-            Back to Shipping
-          </Button>
-          <Button
-            type="submit"
-            variant="default"
-            iconName="ArrowRight"
-            iconPosition="right"
-            disabled={!selectedOption || isLoading}
-            loading={isLoading}
-          >
-            {isLoading ? 'Processing...' : 'Continue to Payment'}
-          </Button>
+  type="button"
+  variant="outline"
+  onClick={onBack}
+  iconName="ArrowLeft"
+  iconPosition="left"
+  disabled={isLoading}
+  className="w-full md:w-auto"
+>
+  Back to Shipping
+</Button>
+
+<Button
+  type="submit"
+  variant="default"
+  iconName="ArrowRight"
+  iconPosition="right"
+  disabled={!selectedOption || isLoading}
+  loading={isLoading}
+  className="w-full md:w-auto"
+>
+  {isLoading ? 'Processing...' : 'Continue to Payment'}
+</Button>
         </div>
       </form>
     </div>
