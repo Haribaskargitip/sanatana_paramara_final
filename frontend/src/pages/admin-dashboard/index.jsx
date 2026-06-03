@@ -231,7 +231,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="divide-y divide-gray-200">
                   {products.map((product) => (
-                    <div key={product.id} className="p-6 flex justify-between items-start">
+                    <div key={product.id} className="p-6 flex justify-between">
                       <div className="flex-1">
                         <h3 className="font-medium text-gray-900">{product.name}</h3>
                         <p className="text-sm text-gray-600 mt-1">{product.category}</p>
@@ -289,7 +289,7 @@ const AdminDashboard = () => {
               ) : (
                 orders.map((order) => (
                   <div key={order.id} className="p-6">
-                    <div className="flex justify-between items-start">
+                    <div className="flex justify-between ">
                       <div>
                         <h3 className="font-medium text-gray-900">Order #{order.id}</h3>
                         <p className="text-sm text-gray-600 mt-1">
