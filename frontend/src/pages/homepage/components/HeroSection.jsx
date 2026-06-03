@@ -46,7 +46,7 @@ const HeroSection = () => {
             <img
                 src={sliderImages[current]}
                 alt={`Hero Slide ${current + 1}`}
-              className="w-full h-[70vh] md:h-[110vh] object-cover transition-all duration-1000"
+               className="w-full block md:h-[110vh]object-covertransition-allduration-1000absoluteinset-0"
                 style={{ zIndex: 1 }}
             />
             {/* Navigation Arrows */}
