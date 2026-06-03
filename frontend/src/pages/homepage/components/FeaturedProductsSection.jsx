@@ -304,9 +304,9 @@ useEffect(() => {
                       </div>
 
                       {/* Rating */}
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="flex items-center">
-                          {[...Array(5)].map((_, i) => (
+                      {/* <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center"> */}
+                          {/* {[...Array(5)].map((_, i) => (
                             <Icon
                               key={i}
                               name="Star"
@@ -321,7 +321,7 @@ useEffect(() => {
                         <span className="text-sm text-muted-foreground">
                           {product.rating} ({product.reviews})
                         </span>
-                      </div>
+                      </div> */}
 
                       {/* Weight Options */}
                       {product.variants && product.variants.length > 0 && (
