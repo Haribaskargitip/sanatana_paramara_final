@@ -42,7 +42,7 @@ const ShopByCategorySection = () => {
     },
     {
       id: 3,
-      name: 'Ghee',
+      name: 'Ghee & Honey',
       productCount: 12,
       image: [
         '/assets/banner/ghee1.png'
@@ -114,7 +114,7 @@ const ShopByCategorySection = () => {
               className="group bg-white rounded-2xl shadow-lg border border-border hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden"
             >
               {/* Image */}
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-72 overflow-hidden">
                 <img
                   src={category.image}
                   alt={category.name}

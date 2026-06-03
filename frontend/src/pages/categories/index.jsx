@@ -178,7 +178,7 @@ const CategoryCard = ({ category, onClick }) => (
     onClick={onClick}
   >
     {/* Category Image */}
-    <div className="aspect-video relative overflow-hidden">
+    <div className="h-60 relative overflow-hidden">
       <img
         src={category.image}
         alt={category.displayName}

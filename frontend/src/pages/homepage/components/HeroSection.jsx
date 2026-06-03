@@ -50,7 +50,7 @@ const HeroSection = () => {
                 style={{ zIndex: 1 }}
             />
             {/* Navigation Arrows */}
-            {sliderImages.length > 1 && (
+           {!isMobile && sliderImages.length > 1 && (
                 <>
                     <button
                         onClick={prevSlide}
@@ -69,7 +69,7 @@ const HeroSection = () => {
                 </>
             )}
             {/* Dots */}
-            {sliderImages.length > 1 && (
+          {!isMobile && sliderImages.length > 1 && (
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
                     {sliderImages.map((_, idx) => (
                         <button
