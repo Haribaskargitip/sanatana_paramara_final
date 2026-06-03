@@ -65,7 +65,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemoveItem, onSaveForLater }) => {
           </div>
 
           {/* Price and Quantity Controls */}
-          <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <span className="font-data font-bold text-lg text-foreground">
