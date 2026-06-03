@@ -30,11 +30,14 @@ const EssentialOilsSection = () => (
             className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
             style={{ textDecoration: 'none' }}
           >
-  <div className="p-6 flex items-center justify-center">
-  <span className="font-heading text-lg font-semibold text-foreground text-center">
-    {oil.name}
-  </span>
-</div>
+            <div className="flex-1 w-full aspect-[4/5] bg-gray-100 flex items-center justify-center">
+              <img
+                src={oil.img}
+                alt={oil.name}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
             <div className="p-6 flex items-center justify-center">
               <span className="font-heading text-lg font-semibold text-foreground text-center">
                 {oil.name}
@@ -47,4 +50,4 @@ const EssentialOilsSection = () => (
   </section>
 );
 
-export default EssentialOilsSection;
+export default EssentialOilsSection; 
