@@ -22,7 +22,7 @@ const EssentialOilsSection = () => (
           Discover our range of pure, traditional Wood-pressed oils for your daily needs.
         </p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8">
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
         {essentialOils.map((oil, idx) => (
           <a
             key={oil.id}
@@ -30,19 +30,22 @@ const EssentialOilsSection = () => (
             className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
             style={{ textDecoration: 'none' }}
           >
-            <div className="flex-1 w-full aspect-[4/5] bg-gray-100 flex items-center justify-center">
-              <img
-                src={oil.img}
-                alt={oil.name}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div className="p-6 flex items-center justify-center">
-              <span className="font-heading text-lg font-semibold text-foreground text-center">
-                {oil.name}
-              </span>
-            </div>
+            {/* Image Section */}
+<div className="h-40 md:h-64 bg-gray-100 flex items-center justify-center p-3">
+  <img
+    src={oil.img}
+    alt={oil.name}
+    className="max-w-full max-h-full object-contain"
+    loading="lazy"
+  />
+</div>
+
+{/* Content Section */}
+<div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
+  <span className="font-heading text-sm md:text-lg font-semibold text-center">
+    {oil.name}
+  </span>
+</div>
           </a>
         ))}
       </div>
