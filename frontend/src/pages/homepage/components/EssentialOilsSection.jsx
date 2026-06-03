@@ -49,5 +49,4 @@ const EssentialOilsSection = () => (
     </div>
   </section>
 );
-
-export default EssentialOilsSection; 
+export default EssentialOilsSection;
