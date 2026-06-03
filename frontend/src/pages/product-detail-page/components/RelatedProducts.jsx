@@ -88,7 +88,7 @@ const RelatedProducts = ({ products, onAddToCart }) => {
                   )}
                 </div>
 
-                {/* Rating */}
+                Rating
                 <div className="flex items-center gap-2">
                   <div className="flex">
                     {Array.from({ length: 5 }, (_, index) => (

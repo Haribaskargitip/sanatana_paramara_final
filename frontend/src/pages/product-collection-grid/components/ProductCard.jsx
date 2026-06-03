@@ -244,7 +244,7 @@ const ProductCard = ({
   </div>
 
   {/* Rating Section */}
-  <div className="flex items-center gap-2 mb-3">
+  {/* <div className="flex items-center gap-2 mb-3">
     <div className="flex items-center gap-1">
       {renderStars(product?.rating)}
     </div>
@@ -252,7 +252,7 @@ const ProductCard = ({
     <span className="text-xs text-muted-foreground">
       ({product?.reviewCount})
     </span>
-  </div>
+  </div> */}
 
   {/* Variant Section */}
   <div className="mb-4">
