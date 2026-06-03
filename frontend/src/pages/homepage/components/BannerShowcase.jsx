@@ -7,7 +7,7 @@ const BannerShowcase = () => {
     {
       title: "Premium Ghee Collection",
       description: "Pure A2 cow ghee and traditional ghee varieties",
-      images: ['/assets/banner/ghee1.png'],
+      images: ['/assets/banner/ghee4.png'],
       link: "/product-collection-grid?category=3",
       badge: "Premium Quality"
     },
