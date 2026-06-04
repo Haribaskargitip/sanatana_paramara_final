@@ -49,30 +49,33 @@ const EdibleOilsSection = () => {
                         Experience the purity of our premium edible oils, crafted for health and wellness.
                     </p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    {edibleOils.map((oil) => (
-                        <a
-                            key={oil.id}
-                            href={`/product-detail-page/${oil.id}`}
-                            className="flex flex-col bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer group"
-                            style={{ textDecoration: 'none' }}
-                        >
-                            <div className="flex-1 w-full aspect-[2/3] bg-gray-100 flex items-center justify-center overflow-hidden">
-                                <img
-                                    src={oil.img}
-                                    alt={oil.name}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    loading="lazy"
-                                />
-                            </div>
-                            <div className="p-6 flex items-center justify-center bg-white">
-                                <span className="font-heading text-xl font-semibold text-foreground text-center group-hover:text-primary transition-colors">
-                                    {oil.name}
-                                </span>
-                            </div>
-                        </a>
-                    ))}
-                </div>
+               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 max-w-5xl mx-auto">
+  {edibleOils.map((oil) => (
+    <a
+      key={oil.id}
+      href={`/product-detail-page/${oil.id}`}
+      className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
+      style={{ textDecoration: 'none' }}
+    >
+      {/* Image Section */}
+      <div className="h-50 md:h-64 bg-gray-100 flex items-center justify-center p-3">
+        <img
+          src={oil.img}
+          alt={oil.name}
+          className="max-w-full max-h-full object-contain"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Content Section */}
+      <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
+        <span className="font-heading text-sm md:text-lg font-semibold text-center">
+          {oil.name}
+        </span>
+      </div>
+    </a>
+  ))}
+</div>
             </div>
         </section>
     );

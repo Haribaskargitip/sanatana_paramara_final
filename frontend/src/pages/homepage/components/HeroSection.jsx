@@ -7,7 +7,7 @@ const desktopImages = [
     '/assets/banner/3.png',
     '/assets/banner/4.png',
     '/assets/banner/5.png',
-    '/assets/banner/6.png'
+    // '/assets/banner/6.png'
 ];
 const mobileImages = [
     '/assets/banner/mobilefirst.png',
