@@ -40,13 +40,12 @@ const EssentialOilsSection = () => (
         />
       </div> */}
 
-        <img
-          src={oil.img}
-          alt={oil.name}
-          className="max-w-full max-h-full object-contain"
-          loading="lazy"
-        />
-
+   <img
+    src={oil.img}
+    alt={oil.name}
+    className="w-[100%] h-[100%] object-contain"
+    loading="lazy"
+  />
       <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
         <span className="font-heading text-sm md:text-lg font-semibold text-center">
           {oil.name}

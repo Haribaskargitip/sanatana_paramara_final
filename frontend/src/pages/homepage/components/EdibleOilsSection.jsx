@@ -51,36 +51,34 @@ const EdibleOilsSection = () => {
                 </div>
                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 max-w-5xl mx-auto">
   {edibleOils.map((oil) => (
-    <a
-      key={oil.id}
-      href={`/product-detail-page/${oil.id}`}
-      className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
-      style={{ textDecoration: 'none' }}
-    >
-      {/* Image Section */}
-     {/* <div className="h-48 md:h-72 bg-gray-100 flex items-center justify-center p-1">
-  <img
-    src={oil.img}
-    alt={oil.name}
-    className="w-[95%] h-[95%] object-contain"
-    loading="lazy"
-  />
-</div> */}
-
- <img
-    src={oil.img}
-    alt={oil.name}
-    className="w-[95%] h-[95%] object-contain"
-    loading="lazy"
-  />
-
-      {/* Content Section */}
-      <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
-        <span className="font-heading text-sm md:text-lg font-semibold text-center">
-          {oil.name}
-        </span>
-      </div>
-    </a>
+  <a
+  key={oil.id}
+  href={`/product-detail-page/${oil.id}`}
+  className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
+  style={{ textDecoration: 'none' }}
+>
+  {/* Image Section */}
+  {/* <div className="h-48 md:h-72 bg-gray-100 flex items-center justify-center p-1">
+    <img
+      src={oil.img}
+      alt={oil.name}
+      className="w-full h-full object-contain"
+      loading="lazy"
+    />
+  </div> */}
+   <img
+      src={oil.img}
+      alt={oil.name}
+     className="w-[100%] h-[100%] object-contain"
+      loading="lazy"
+    />
+  {/* Line + Content Section */}
+  <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
+    <span className="font-heading text-sm md:text-lg font-semibold text-center">
+      {oil.name}
+    </span>
+  </div>
+</a>
   ))}
 </div>
             </div>
@@ -89,3 +87,4 @@ const EdibleOilsSection = () => {
 };
 
 export default EdibleOilsSection;
+
