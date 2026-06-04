@@ -12,44 +12,45 @@ const essentialOils = [
 ];
 
 const EssentialOilsSection = () => (
-  <section className="py-16 bg-gray-50">
-    <div className="container mx-auto px-4">
-      <div className="text-center mb-12">
-        <h2 className="font-heading text-4xl font-bold text-accent mb-4">
-          Wood Pressed Oils
-        </h2>
-        <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
-          Discover our range of pure, traditional Wood-pressed oils for your daily needs.
-        </p>
-      </div>
-<div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-        {essentialOils.map((oil, idx) => (
-          <a
-            key={oil.id}
-            href={`/product-detail-page/${oil.id}`}
-            className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
-            style={{ textDecoration: 'none' }}
-          >
-            {/* Image Section */}
-<div className="h-40 md:h-64 bg-gray-100 flex items-center justify-center p-3">
-  <img
-    src={oil.img}
-    alt={oil.name}
-    className="max-w-full max-h-full object-contain"
-    loading="lazy"
-  />
-</div>
-
-{/* Content Section */}
-<div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
-  <span className="font-heading text-sm md:text-lg font-semibold text-center">
-    {oil.name}
-  </span>
-</div>
-          </a>
-        ))}
-      </div>
+ <section className="py-16 bg-gray-50">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <h2 className="font-heading text-4xl font-bold text-accent mb-4">
+        Edible Oils
+      </h2>
+      <p className="font-body text-lg text-muted-foreground max-w-2xl mx-auto">
+        Experience the purity of our premium edible oils, crafted for health and wellness.
+      </p>
     </div>
-  </section>
+
+   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 max-w-5xl mx-auto">
+      {edibleOils.map((oil) => (
+        <a
+          key={oil.id}
+          href={`/product-detail-page/${oil.id}`}
+          className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
+          style={{ textDecoration: 'none' }}
+        >
+          {/* Image Section */}
+          <div className="h-40 md:h-64 bg-gray-100 flex items-center justify-center p-3">
+            <img
+              src={oil.img}
+              alt={oil.name}
+              className="max-w-full max-h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Content Section */}
+          <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
+            <span className="font-heading text-sm md:text-lg font-semibold text-center">
+              {oil.name}
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
 );
 export default EssentialOilsSection;
