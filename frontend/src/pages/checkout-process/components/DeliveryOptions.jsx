@@ -202,10 +202,14 @@ const DeliveryOptions = ({ onNext, onBack, shippingAddress, user: parentUser, is
         </div>
 
       <div className="flex flex-col md:flex-row gap-3 md:gap-0 justify-between pt-6">  
-          <Button
+     <Button
   type="button"
   variant="outline"
-  onClick={onBack}
+  onClick={() => {
+    alert("Back button clicked");
+    console.log("Back button clicked");
+    onBack?.();
+  }}
   iconName="ArrowLeft"
   iconPosition="left"
   disabled={isLoading}
@@ -213,7 +217,6 @@ const DeliveryOptions = ({ onNext, onBack, shippingAddress, user: parentUser, is
 >
   Back to Shipping
 </Button>
-
 <Button
   type="submit"
   variant="default"

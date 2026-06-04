@@ -481,7 +481,7 @@ const CheckoutProcess = () => {
         return (
           <DeliveryOptions
             onNext={handleStepNext}
-            onBack={handleStepBack}
+              onBack={() => setCurrentStep(1)}
             shippingAddress={shippingData}
             user={user}
             isLoading={isProcessing}
@@ -491,7 +491,7 @@ const CheckoutProcess = () => {
         return (
           <PaymentForm
             onNext={handleStepNext}
-            onBack={handleStepBack}
+            onBack={() => setCurrentStep(2)}
             orderTotal={total}
             paymentMethod={paymentData?.method}
             setPaymentMethod={setPaymentData}
