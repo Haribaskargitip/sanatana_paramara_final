@@ -31,21 +31,21 @@ const EssentialOilsSection = () => (
       className="flex flex-col bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden cursor-pointer"
       style={{ textDecoration: 'none' }}
     >
-      {/* <div className="h-40 md:h-64 bg-gray-100 flex items-center justify-center p-3">
-        <img
-          src={oil.img}
-          alt={oil.name}
-          className="max-w-full max-h-full object-contain"
-          loading="lazy"
-        />
-      </div> */}
+      <div >
+       <img
+      src={oil.img}
+      alt={oil.name}
+     className="w-[200%] h-[100%] object-contain"
+      loading="lazy"
+    />
+      </div>
 
-   <img
+   {/* <img
     src={oil.img}
     alt={oil.name}
     className="w-[100%] h-[100%] object-contain"
     loading="lazy"
-  />
+  /> */}
       <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
         <span className="font-heading text-sm md:text-lg font-semibold text-center">
           {oil.name}

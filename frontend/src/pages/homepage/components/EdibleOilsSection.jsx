@@ -69,7 +69,7 @@ const EdibleOilsSection = () => {
    <img
       src={oil.img}
       alt={oil.name}
-     className="w-[100%] h-[100%] object-contain"
+     className="w-[200%] h-[89%] object-contain"
       loading="lazy"
     />
   {/* Line + Content Section */}
