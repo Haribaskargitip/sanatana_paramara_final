@@ -72,6 +72,7 @@ const EdibleOilsSection = () => {
      className="w-[200%] h-[89%] object-contain"
       loading="lazy"
     />
+    
   {/* Line + Content Section */}
   <div className="min-h-20 border-t border-gray-200 flex items-center justify-center px-2 py-2">
   <span className="font-heading text-sm md:text-lg font-semibold text-center break-words whitespace-normal leading-tight">
