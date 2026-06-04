@@ -371,29 +371,28 @@ const PaymentForm = ({ onNext, onBack, orderTotal, paymentMethod: initialPayment
             </div>
           </div>
         </div>
+<div className="flex flex-col gap-3 pt-6 sm:flex-row sm:justify-between">
+  <Button
+    type="button"
+    variant="outline"
+    onClick={onBack}
+    iconName="ArrowLeft"
+    iconPosition="left"
+    className="w-full sm:w-auto"
+  >
+    Back to Delivery
+  </Button>
 
-        <div className="flex justify-between pt-6">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onBack}
-            iconName="ArrowLeft"
-            iconPosition="left"
-            disabled={isLoading}
-          >
-            Back to Delivery
-          </Button>
-          <Button
-            type="submit"
-            variant="default"
-            iconName="ArrowRight"
-            iconPosition="right"
-            disabled={!paymentMethod || isLoading}
-            loading={isLoading}
-          >
-            {isLoading ? 'Processing...' : 'Review Order'}
-          </Button>
-        </div>
+  <Button
+    type="submit"
+    variant="default"
+    iconName="ArrowRight"
+    iconPosition="right"
+    className="w-full sm:w-auto"
+  >
+    Review Order
+  </Button>
+</div>
       </form>
     </div>
   );
