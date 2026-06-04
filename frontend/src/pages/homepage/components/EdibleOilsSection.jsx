@@ -58,14 +58,21 @@ const EdibleOilsSection = () => {
       style={{ textDecoration: 'none' }}
     >
       {/* Image Section */}
-      <div className="h-50 md:h-64 bg-gray-100 flex items-center justify-center p-3">
-        <img
-          src={oil.img}
-          alt={oil.name}
-          className="max-w-full max-h-full object-contain"
-          loading="lazy"
-        />
-      </div>
+     {/* <div className="h-48 md:h-72 bg-gray-100 flex items-center justify-center p-1">
+  <img
+    src={oil.img}
+    alt={oil.name}
+    className="w-[95%] h-[95%] object-contain"
+    loading="lazy"
+  />
+</div> */}
+
+ <img
+    src={oil.img}
+    alt={oil.name}
+    className="w-[95%] h-[95%] object-contain"
+    loading="lazy"
+  />
 
       {/* Content Section */}
       <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
