@@ -46,11 +46,11 @@ const EssentialOilsSection = () => (
     className="w-[100%] h-[100%] object-contain"
     loading="lazy"
   /> */}
-      <div className="h-20 border-t border-gray-200 flex items-center justify-center px-2">
-        <span className="font-heading text-sm md:text-lg font-semibold text-center">
-          {oil.name}
-        </span>
-      </div>
+        <div className="min-h-20 border-t border-gray-200 flex items-center justify-center px-2 py-2">
+  <span className="font-heading text-sm md:text-lg font-semibold text-center break-words whitespace-normal leading-tight">
+    {oil.name}
+  </span>
+</div>
     </a>
   ))}
 </div>
