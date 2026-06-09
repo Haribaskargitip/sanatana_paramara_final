@@ -495,12 +495,12 @@ public class EmailService {
         totalsTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         double subtotal = parseDouble(orderData.get("subtotal"));
-        double shippingCost = parseDouble(orderData.get("shippingCost"));
+        double shippingFee = parseDouble(orderData.get("shippingFee"));
         double discountAmount = parseDouble(orderData.get("discountAmount"));
         double total = parseDouble(orderData.get("total"));
 
         addModernTotalRow(totalsTable, "Subtotal", "\u20B9" + String.format("%.2f", subtotal), textNormal, lightBg, borderColor, false);
-        addModernTotalRow(totalsTable, "Shipping", "\u20B9" + String.format("%.2f", shippingCost), textNormal, lightBg, borderColor, false);
+        addModernTotalRow(totalsTable, "Shipping", "\u20B9" + String.format("%.2f", shippingFee), textNormal, lightBg, borderColor, false);
         if (discountAmount > 0) {
             addModernTotalRow(totalsTable, "Discount", "-\u20B9" + String.format("%.2f", discountAmount), textNormal, lightBg, borderColor, false);
         }
