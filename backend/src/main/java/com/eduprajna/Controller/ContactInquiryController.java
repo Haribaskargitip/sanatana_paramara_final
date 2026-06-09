@@ -1,4 +1,4 @@
-package com.eduprajna.controller;
+package com.eduprajna.Controller;
 
 import com.eduprajna.entity.ContactInquiry;
 import com.eduprajna.repository.ContactInquiryRepository;

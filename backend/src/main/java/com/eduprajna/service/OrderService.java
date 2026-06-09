@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -25,12 +26,14 @@ public class OrderService {
     private final com.eduprajna.repository.ProductRepository productRepo;
     private final com.eduprajna.repository.ProductVariantRepository productVariantRepo;
     private final OrderStatusHistoryRepository orderStatusHistoryRepo;
+    private final EmailService emailService;
 
     public OrderService(OrderRepository orderRepo, CartItemRepository cartRepo,
                        CheckoutSelectionRepository selectionRepo, AddressRepository addressRepo,
                        com.eduprajna.repository.ProductRepository productRepo,
                        com.eduprajna.repository.ProductVariantRepository productVariantRepo,
-                       OrderStatusHistoryRepository orderStatusHistoryRepo) {
+                       OrderStatusHistoryRepository orderStatusHistoryRepo,
+                       EmailService emailService) {
         this.orderRepo = orderRepo;
         this.cartRepo = cartRepo;
         this.selectionRepo = selectionRepo;
@@ -38,6 +41,7 @@ public class OrderService {
         this.productRepo = productRepo;
         this.productVariantRepo = productVariantRepo;
         this.orderStatusHistoryRepo = orderStatusHistoryRepo;
+        this.emailService = emailService;
     }
 
     /**
@@ -182,6 +186,32 @@ public class OrderService {
         
         // 10. Update user's order count
         user.incrementTotalOrders();
+        
+        // 11. Send order confirmation email
+        try {
+            Map<String, Object> orderData = Map.of(
+                "orderId", savedOrder.getId(),
+                "id", savedOrder.getId(),
+                "email", user.getEmail(),
+                "userName", user.getName(),
+                "total", savedOrder.getTotal(),
+                "subtotal", savedOrder.getSubtotal(),
+                "shippingFee", savedOrder.getShippingFee(),
+                "deliveryOption", savedOrder.getDeliveryOption(),
+                "paymentMethod", savedOrder.getPaymentMethod(),
+                "items", savedOrder.getItems()
+            );
+            boolean emailSent = emailService.sendOrderConfirmation(orderData);
+            if (emailSent) {
+                logger.info("Order confirmation email sent to: {}", user.getEmail());
+            } else {
+                logger.warn("Failed to send order confirmation email to: {}", user.getEmail());
+            }
+        } catch (Exception emailException) {
+            logger.error("Error sending order confirmation email for order {}: {}", 
+                savedOrder.getId(), emailException.getMessage(), emailException);
+            // Continue - order is placed successfully even if email fails
+        }
         
         return savedOrder;
     }

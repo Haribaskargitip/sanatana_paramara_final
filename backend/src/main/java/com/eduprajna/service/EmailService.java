@@ -103,6 +103,37 @@ public class EmailService {
         }
     }
 
+    /**
+     * Send welcome email to new registered users
+     */
+    public boolean sendWelcomeEmail(String recipientEmail, String userName) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(fromEmail);
+            message.setTo(recipientEmail);
+            message.setSubject("Welcome to Sanatana Parampara!");
+            message.setText(buildWelcomeEmailBody(userName, recipientEmail));
+
+            mailSender.send(message);
+            logger.info("Welcome email sent to: {}", recipientEmail);
+            return true;
+        } catch (Exception e) {
+            logger.error("Failed to send welcome email to: {}", recipientEmail, e);
+            return false;
+        }
+    }
+
+    private String buildWelcomeEmailBody(String userName, String email) {
+        return "Hello " + userName + ",\n\n" +
+                "Welcome to Sanatana Parampara! We're excited to have you on board.\n\n" +
+                "Your account has been successfully created with the following email:\n" +
+                email + "\n\n" +
+                "You can now log in to your account and start exploring our products and services.\n\n" +
+                "If you have any questions or need assistance, please don't hesitate to reach out to our support team.\n\n" +
+                "Best regards,\n" +
+                "Sanatana Parampara Team";
+    }
+
     public boolean sendContactThankYou(String name, String email) throws Exception {
         logger.info("Starting sendContactThankYou for: {}", email);
         try {

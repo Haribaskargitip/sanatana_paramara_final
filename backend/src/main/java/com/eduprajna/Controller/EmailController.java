@@ -1,4 +1,4 @@
-package com.eduprajna.controller;
+package com.eduprajna.Controller;
 
 import com.eduprajna.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.eduprajna.controller;
+package com.eduprajna.Controller;
 
 import com.eduprajna.entity.Address;
 import com.eduprajna.service.AddressService;

@@ -1,4 +1,4 @@
-package com.eduprajna.controller;
+package com.eduprajna.Controller;
 
 import java.util.Map;
 import java.util.Optional;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eduprajna.entity.User;
 import com.eduprajna.service.UserService;
+import com.eduprajna.service.EmailService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -25,12 +26,15 @@ public class AuthController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final org.springframework.security.authentication.AuthenticationManager authenticationManager;
+    private final EmailService emailService;
 
     public AuthController(UserService userService, PasswordEncoder passwordEncoder,
-            org.springframework.security.authentication.AuthenticationManager authenticationManager) {
+            org.springframework.security.authentication.AuthenticationManager authenticationManager,
+            EmailService emailService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.emailService = emailService;
     }
 
     @PostMapping("/login")
@@ -108,8 +112,21 @@ public class AuthController {
             User savedUser = userService.save(user);
             logger.info("User registered successfully: {}", email);
 
+            // Send welcome email to the new user
+            try {
+                boolean emailSent = emailService.sendWelcomeEmail(email, name);
+                if (emailSent) {
+                    logger.info("Welcome email sent successfully to: {}", email);
+                } else {
+                    logger.warn("Failed to send welcome email to: {}", email);
+                }
+            } catch (Exception emailException) {
+                logger.error("Error sending welcome email to: {}", email, emailException);
+                // Continue with response even if email fails
+            }
+
             return ResponseEntity.ok(Map.of(
-                    "message", "User registered successfully",
+                    "message", "User registered successfully. Welcome email has been sent.",
                     "userId", savedUser.getId()));
         } catch (Exception e) {
             logger.error("Error during registration for email: {}", body.get("email"), e);

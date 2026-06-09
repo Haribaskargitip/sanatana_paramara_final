@@ -1,4 +1,4 @@
-package com.eduprajna.controller;
+package com.eduprajna.Controller;
 
 import com.eduprajna.dto.OrderDTO;
 import com.eduprajna.entity.Order;

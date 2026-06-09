@@ -1,4 +1,4 @@
-package com.eduprajna.controller;
+package com.eduprajna.Controller;
 
 import com.eduprajna.dto.CartItemDTO;
 import com.eduprajna.dto.OrderReviewDTO;
