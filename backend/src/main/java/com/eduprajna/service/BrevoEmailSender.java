@@ -37,7 +37,7 @@ public class BrevoEmailSender {
     @Value("${mail.from.email:}")
     private String fromEmail;
 
-    @Value("${mail.from.name:Sanatana Parampara}")
+    @Value("${mail.from.name:Hari}")
     private String fromName;
 
     private final RestTemplate restTemplate;

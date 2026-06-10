@@ -189,18 +189,37 @@ public class OrderService {
         
         // 11. Send order confirmation email
         try {
-            Map<String, Object> orderData = Map.of(
-                "orderId", savedOrder.getId(),
-                "id", savedOrder.getId(),
-                "email", user.getEmail(),
-                "userName", user.getName(),
-                "total", savedOrder.getTotal(),
-                "subtotal", savedOrder.getSubtotal(),
-                "shippingFee", savedOrder.getShippingFee(),
-                "deliveryOption", savedOrder.getDeliveryOption(),
-                "paymentMethod", savedOrder.getPaymentMethod(),
-                "items", savedOrder.getItems()
-            );
+            // Convert OrderItem entities to plain Maps so EmailService can read fields
+            // without triggering lazy-load issues or ClassCastException in the async thread
+            List<java.util.Map<String, Object>> itemMaps = savedOrder.getItems().stream()
+                .map(item -> {
+                    java.util.Map<String, Object> m = new java.util.HashMap<>();
+                    m.put("name",        item.getProductName() != null ? item.getProductName()
+                                         : (item.getProduct() != null ? item.getProduct().getName() : "Product"));
+                    m.put("quantity",    item.getQuantity());
+                    m.put("price",       item.getPrice() != null ? item.getPrice() : 0.0);
+                    m.put("weightValue", item.getVariantWeightValue() != null ? item.getVariantWeightValue()
+                                         : (item.getWeightValue() != null ? item.getWeightValue() : ""));
+                    m.put("weightUnit",  item.getVariantWeightUnit() != null ? item.getVariantWeightUnit()
+                                         : (item.getWeightUnit() != null ? item.getWeightUnit() : ""));
+                    return m;
+                })
+                .collect(Collectors.toList());
+
+            // Use HashMap (not Map.of) to allow null-safe values
+            java.util.Map<String, Object> orderData = new java.util.HashMap<>();
+            orderData.put("orderId",       savedOrder.getId());
+            orderData.put("id",            savedOrder.getId());
+            orderData.put("email",         user.getEmail());
+            orderData.put("name",          user.getName());   // used by PDF "TO" section
+            orderData.put("userName",      user.getName());
+            orderData.put("total",         savedOrder.getTotal());
+            orderData.put("subtotal",      savedOrder.getSubtotal());
+            orderData.put("shippingFee",   savedOrder.getShippingFee());
+            orderData.put("deliveryOption",savedOrder.getDeliveryOption());
+            orderData.put("paymentMethod", savedOrder.getPaymentMethod());
+            orderData.put("items",         itemMaps);
+
             boolean emailSent = emailService.sendOrderConfirmation(orderData);
             if (emailSent) {
                 logger.info("Order confirmation email sent to: {}", user.getEmail());

@@ -4,7 +4,6 @@ import com.eduprajna.dto.PasswordUpdateRequest;
 import com.eduprajna.dto.ProfileDTO;
 import com.eduprajna.entity.User;
 import com.eduprajna.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = { "http://localhost:3000", "http://127.0.0.1:3000" }, allowCredentials = "true")
 public class ProfileController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;

@@ -277,9 +277,10 @@ public class EmailService {
     }
 
     /**
-     * Generate Invoice PDF using OpenPDF
+     * Generate Invoice PDF using OpenPDF.
+     * Public so InvoiceService can call it directly for standalone PDF generation.
      */
-    private byte[] generateInvoicePDF(Map<String, Object> orderData) throws Exception {
+    public byte[] generateInvoicePdf(Map<String, Object> orderData) throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Document document = new Document(PageSize.A4, 36, 36, 36, 36);
         PdfWriter.getInstance(document, outputStream);
