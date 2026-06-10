@@ -76,7 +76,7 @@ public class BrevoEmailSender {
         if (logoBytes != null) {
             Map<String, String> logoAttachment = new HashMap<>();
             logoAttachment.put("content", Base64.getEncoder().encodeToString(logoBytes));
-            logoAttachment.put("name", "logo"); // matches cid:logo
+            logoAttachment.put("name", "logo.jpg"); // matches cid:logo
             body.put("attachment", List.of(logoAttachment));
         }
 
@@ -107,7 +107,7 @@ public class BrevoEmailSender {
         if (logoBytes != null) {
             Map<String, String> logoAttachment = new HashMap<>();
             logoAttachment.put("content", Base64.getEncoder().encodeToString(logoBytes));
-            logoAttachment.put("name", "logo"); // matches cid:logo
+            logoAttachment.put("name", "logo.jpg"); // matches cid:logo
             attachmentsList.add(logoAttachment);
         }
 
