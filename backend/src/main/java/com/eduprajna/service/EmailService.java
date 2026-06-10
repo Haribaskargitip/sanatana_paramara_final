@@ -60,7 +60,7 @@ public class EmailService {
                     if (success) {
                         logger.info("Password reset email sent successfully to: {}", recipientEmail);
                     } else {
-                        logger.warn("Failed to send password reset email to: {}", recipientEmail);
+                        logger.warn("Failed to send password reset email to: {}. Fallback password reset link: {}", recipientEmail, resetLink);
                     }
                 } catch (Exception e) {
                     logger.error("Error sending password reset email asynchronously to: {}", recipientEmail, e);
@@ -97,7 +97,7 @@ public class EmailService {
                     if (success) {
                         logger.info("Credentials email sent successfully to: {}", recipientEmail);
                     } else {
-                        logger.warn("Failed to send credentials email to: {}", recipientEmail);
+                        logger.warn("Failed to send credentials email to: {}. Fallback credentials: username={}, password={}", recipientEmail, username, password);
                     }
                 } catch (Exception e) {
                     logger.error("Error sending credentials email asynchronously to: {}", recipientEmail, e);
