@@ -35,6 +35,9 @@ public class PasswordResetService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @org.springframework.beans.factory.annotation.Value("${frontend.url:https://sanatana-paramara-final-ma9b.vercel.app}")
+    private String frontendUrl;
+
     /**
      * Generate password reset token for user email
      * Conditions:
@@ -215,8 +218,12 @@ public class PasswordResetService {
      * Build password reset link
      */
     private String buildResetLink(String token) {
-        // Adjust URL to your frontend domain
-        return "http://56.228.81.193/reset-password?token=" + token;
+        // Ensure frontendUrl doesn't end with a trailing slash for consistency
+        String baseUrl = frontendUrl;
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+        }
+        return baseUrl + "/reset-password?token=" + token;
     }
 
     /**

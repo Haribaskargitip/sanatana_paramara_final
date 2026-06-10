@@ -8,18 +8,12 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.draw.LineSeparator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.eduprajna.entity.OrderItem;
-import jakarta.mail.internet.MimeMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.awt.Color;
@@ -27,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,19 +34,16 @@ public class EmailService {
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Autowired
-    private JavaMailSender mailSender;
+    private BrevoEmailSender brevoEmailSender;
 
     @Autowired
     private TemplateEngine templateEngine;
-
-    @Value("${mail.from.email:${spring.mail.username}}")
-    private String fromEmail;
 
     private static final String LOGO_PATH = "static/images/logo.png";
 
     @jakarta.annotation.PostConstruct
     public void init() {
-        logger.info("EmailService initialized with sender: {}", fromEmail);
+        logger.info("EmailService initialized using Brevo HTTP API Email Sender");
     }
 
     /**
@@ -59,17 +51,24 @@ public class EmailService {
      */
     public boolean sendPasswordResetEmail(String recipientEmail, String username, String resetLink) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(fromEmail);
-            message.setTo(recipientEmail);
-            message.setSubject("Sanatana Parampara - Password Reset Request");
-            message.setText(buildPasswordResetEmailBody(username, resetLink, recipientEmail));
+            String subject = "Sanatana Parampara - Password Reset Request";
+            String textContent = buildPasswordResetEmailBody(username, resetLink, recipientEmail);
 
-            mailSender.send(message);
-            logger.info("Password reset email sent to: {}", recipientEmail);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    boolean success = brevoEmailSender.sendTextEmail(recipientEmail, subject, textContent);
+                    if (success) {
+                        logger.info("Password reset email sent successfully to: {}", recipientEmail);
+                    } else {
+                        logger.warn("Failed to send password reset email to: {}", recipientEmail);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error sending password reset email asynchronously to: {}", recipientEmail, e);
+                }
+            });
             return true;
         } catch (Exception e) {
-            logger.error("Failed to send password reset email", e);
+            logger.error("Failed to schedule password reset email for: {}", recipientEmail, e);
             return false;
         }
     }
@@ -88,18 +87,25 @@ public class EmailService {
      */
     public boolean sendCredentialsEmail(String recipientEmail, String username, String password) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(fromEmail);
-            message.setTo(recipientEmail);
-            message.setSubject("Sanatana Parampara - Your Account Credentials");
-            message.setText("Hello " + username + ",\n\nYour account credentials:\nEmail: " + recipientEmail
-                    + "\nUsername: " + username + "\nPassword: " + password);
+            String subject = "Sanatana Parampara - Your Account Credentials";
+            String textContent = "Hello " + username + ",\n\nYour account credentials:\nEmail: " + recipientEmail
+                    + "\nUsername: " + username + "\nPassword: " + password;
 
-            mailSender.send(message);
-            logger.info("Credentials email sent to: {}", recipientEmail);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    boolean success = brevoEmailSender.sendTextEmail(recipientEmail, subject, textContent);
+                    if (success) {
+                        logger.info("Credentials email sent successfully to: {}", recipientEmail);
+                    } else {
+                        logger.warn("Failed to send credentials email to: {}", recipientEmail);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error sending credentials email asynchronously to: {}", recipientEmail, e);
+                }
+            });
             return true;
         } catch (Exception e) {
-            logger.error("Failed to send credentials email", e);
+            logger.error("Failed to schedule credentials email for: {}", recipientEmail, e);
             return false;
         }
     }
@@ -109,17 +115,24 @@ public class EmailService {
      */
     public boolean sendWelcomeEmail(String recipientEmail, String userName) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(fromEmail);
-            message.setTo(recipientEmail);
-            message.setSubject("Welcome to Sanatana Parampara!");
-            message.setText(buildWelcomeEmailBody(userName, recipientEmail));
+            String subject = "Welcome to Sanatana Parampara!";
+            String textContent = buildWelcomeEmailBody(userName, recipientEmail);
 
-            mailSender.send(message);
-            logger.info("Welcome email sent to: {}", recipientEmail);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    boolean success = brevoEmailSender.sendTextEmail(recipientEmail, subject, textContent);
+                    if (success) {
+                        logger.info("Welcome email sent successfully to: {}", recipientEmail);
+                    } else {
+                        logger.warn("Failed to send welcome email to: {}", recipientEmail);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error sending welcome email asynchronously to: {}", recipientEmail, e);
+                }
+            });
             return true;
         } catch (Exception e) {
-            logger.error("Failed to send welcome email to: {}", recipientEmail, e);
+            logger.error("Failed to schedule welcome email for: {}", recipientEmail, e);
             return false;
         }
     }
@@ -138,13 +151,8 @@ public class EmailService {
     public boolean sendContactThankYou(String name, String email) throws Exception {
         logger.info("Starting sendContactThankYou for: {}", email);
         try {
-            if (mailSender == null)
-                throw new RuntimeException("JavaMailSender is NOT injected!");
             if (templateEngine == null)
                 throw new RuntimeException("TemplateEngine is NOT injected!");
-
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
             Context context = new Context();
             context.setVariable("name", name);
@@ -157,21 +165,21 @@ public class EmailService {
             String htmlContent = templateEngine.process("email/contact-thankyou", context);
             logger.info("Template processed successfully. Length: {}", htmlContentLength(htmlContent));
 
-            helper.setFrom(fromEmail);
-            helper.setTo(email);
-            helper.setSubject("Thank you for reaching us!");
-            helper.setText(htmlContent, true);
-
-            if (logoExists) {
-                helper.addInline("logo", new ClassPathResource(LOGO_PATH));
-            }
-
-            logger.info("Sending email to: {}", email);
-            mailSender.send(mimeMessage);
-            logger.info("Contact thank you email sent successfully to: {}", email);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    boolean success = brevoEmailSender.sendHtmlEmail(email, "Thank you for reaching us!", htmlContent);
+                    if (success) {
+                        logger.info("Contact thank you email sent successfully to: {}", email);
+                    } else {
+                        logger.warn("Failed to send contact thank you email to: {}", email);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error sending contact thank you email asynchronously to: {}", email, e);
+                }
+            });
             return true;
         } catch (Exception e) {
-            logger.error("CRITICAL ERROR in sendContactThankYou: {}", e.getMessage(), e);
+            logger.error("CRITICAL ERROR in sendContactThankYou preparation: {}", e.getMessage(), e);
             throw e;
         }
     }
@@ -179,13 +187,8 @@ public class EmailService {
     public boolean sendSubscriptionConfirmation(String email) throws Exception {
         logger.info("Starting sendSubscriptionConfirmation for: {}", email);
         try {
-            if (mailSender == null)
-                throw new RuntimeException("JavaMailSender is NOT injected!");
             if (templateEngine == null)
                 throw new RuntimeException("TemplateEngine is NOT injected!");
-
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
             Context context = new Context();
             boolean logoExists = checkLogoExists();
@@ -196,21 +199,21 @@ public class EmailService {
             String htmlContent = templateEngine.process("email/subscription-confirmation", context);
             logger.info("Template processed successfully. Length: {}", htmlContentLength(htmlContent));
 
-            helper.setFrom(fromEmail);
-            helper.setTo(email);
-            helper.setSubject("Thank you for subscribing!");
-            helper.setText(htmlContent, true);
-
-            if (logoExists) {
-                helper.addInline("logo", new ClassPathResource(LOGO_PATH));
-            }
-
-            logger.info("Sending email to: {}", email);
-            mailSender.send(mimeMessage);
-            logger.info("Subscription confirmation email sent successfully to: {}", email);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    boolean success = brevoEmailSender.sendHtmlEmail(email, "Thank you for subscribing!", htmlContent);
+                    if (success) {
+                        logger.info("Subscription confirmation email sent successfully to: {}", email);
+                    } else {
+                        logger.warn("Failed to send subscription confirmation email to: {}", email);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error sending subscription confirmation email asynchronously to: {}", email, e);
+                }
+            });
             return true;
         } catch (Exception e) {
-            logger.error("CRITICAL ERROR in sendSubscriptionConfirmation: {}", e.getMessage(), e);
+            logger.error("CRITICAL ERROR in sendSubscriptionConfirmation preparation: {}", e.getMessage(), e);
             throw e;
         }
     }
@@ -228,13 +231,8 @@ public class EmailService {
         logger.info("Starting sendOrderConfirmation for Order: {}, Email: {}", orderIdStr, email);
 
         try {
-            if (mailSender == null)
-                throw new RuntimeException("JavaMailSender is NOT injected!");
             if (templateEngine == null)
                 throw new RuntimeException("TemplateEngine is NOT injected!");
-
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
             // Prepare Thymeleaf context
             Context context = new Context();
@@ -248,27 +246,32 @@ public class EmailService {
             String htmlContent = templateEngine.process("email/order-confirmation", context);
             logger.info("Template processed successfully. Length: {}", htmlContentLength(htmlContent));
 
-            helper.setFrom(fromEmail);
-            helper.setTo(email);
-            helper.setSubject("Order Confirmation #" + orderIdStr + " - Sanatana Parampare");
-            helper.setText(htmlContent, true);
-
-            if (logoExists) {
-                helper.addInline("logo", new ClassPathResource(LOGO_PATH));
-            }
-
             // Generate PDF attachment
             logger.info("Generating invoice PDF for Order: {}", orderIdStr);
             byte[] pdfBytes = generateInvoicePDF(orderData);
             logger.info("PDF generated successfully. Size: {} bytes", pdfBytes.length);
-            helper.addAttachment("invoice_" + orderIdStr + ".pdf", new ByteArrayResource(pdfBytes));
 
-            logger.info("Sending email to: {}", email);
-            mailSender.send(mimeMessage);
-            logger.info("Order confirmation email with PDF sent successfully to: {}", email);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    boolean success = brevoEmailSender.sendHtmlEmailWithAttachment(
+                            email,
+                            "Order Confirmation #" + orderIdStr + " - Sanatana Parampare",
+                            htmlContent,
+                            pdfBytes,
+                            "invoice_" + orderIdStr + ".pdf"
+                    );
+                    if (success) {
+                        logger.info("Order confirmation email with PDF sent successfully to: {}", email);
+                    } else {
+                        logger.warn("Failed to send order confirmation email to: {}", email);
+                    }
+                } catch (Exception e) {
+                    logger.error("Error sending order confirmation email asynchronously for Order {}: {}", orderIdStr, e.getMessage(), e);
+                }
+            });
             return true;
         } catch (Exception e) {
-            logger.error("CRITICAL ERROR in sendOrderConfirmation for Order {}: {}", orderIdStr, e.getMessage(), e);
+            logger.error("CRITICAL ERROR in sendOrderConfirmation preparation for Order {}: {}", orderIdStr, e.getMessage(), e);
             throw e;
         }
     }
