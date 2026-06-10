@@ -248,7 +248,7 @@ public class EmailService {
 
             // Generate PDF attachment
             logger.info("Generating invoice PDF for Order: {}", orderIdStr);
-            byte[] pdfBytes = generateInvoicePDF(orderData);
+            byte[] pdfBytes = generateInvoicePdf(orderData);
             logger.info("PDF generated successfully. Size: {} bytes", pdfBytes.length);
 
             CompletableFuture.runAsync(() -> {
