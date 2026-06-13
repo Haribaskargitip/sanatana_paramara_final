@@ -52,6 +52,7 @@ const ShopByCategorySection = () => {
       featured: ['Pure Ghee', 'Wild Honey', 'A2 Cow Ghee'],
       startingPrice: 450,
       badge: 'Premium'
+
     },
     {
       id: 8,
@@ -84,7 +85,6 @@ const ShopByCategorySection = () => {
   const handleAddToWishlist = (categoryName) => {
     setPopup({ open: true, message: `${categoryName} added to wishlist!`, type: 'success' });
   };
-
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
