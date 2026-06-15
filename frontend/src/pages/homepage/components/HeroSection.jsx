@@ -44,32 +44,13 @@ const HeroSection = () => {
 
     return (
        <section
-  className="
-    relative
-    h-[65vh]
-    md:h-[112vh]
-    w-full
-    overflow-hidden
-    flex
-    items-center
-    justify-center
-  "
+  className="relative h-[65vh] md:h-screen w-full overflow-hidden flex items-center justify-center bg-black"
 >
-            <img
-                src={sliderImages[current]}
-                alt={`Hero Slide ${current + 1}`}
-               className="
-w-full
-h-full
-object-contain
-md:object-cover
-transition-all
-duration-1000
-absolute
-inset-0
-"
-                style={{ zIndex: 1 }}
-            />
+  <img src={sliderImages[current]}
+    alt={`Hero Slide ${current + 1}`}
+  className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
+    style={{ zIndex: 1 }}
+  />
             {/* Navigation Arrows */}
             {!isMobile && sliderImages.length > 1 && (
                 <>
@@ -105,5 +86,4 @@ inset-0
         </section>
     );
 };
-
 export default HeroSection;
