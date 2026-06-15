@@ -102,7 +102,7 @@ const Header = ({ isLoggedIn = false, onSearch = () => {} }) => {
               <Icon name="Truck" size={14} />
               Free Shipping ₹499+
             </span>
-            <span className="hidden md:flex items-center gap-2">
+            <span className="hidden md:flex items-center gap-1">
               <Icon name="Shield" size={14} />
               100% Authentic Products
             </span>
@@ -119,7 +119,7 @@ const Header = ({ isLoggedIn = false, onSearch = () => {} }) => {
       <header className="bg-white shadow-lg sticky top-0 z-50">
         <div className="container mx-auto px-4">
           {/* Primary Header Row */}
-          <div className="flex items-center justify-between py-4">
+          <div className="flex items-center justify-between py-0">
             {/* Logo Section */}
             <Link to="/homepage" className="flex items-center group">
                <div className="relative w-32 h-16 flex items-center justify-center overflow-visible">
