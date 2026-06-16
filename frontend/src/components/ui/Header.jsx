@@ -184,7 +184,7 @@ const Header = ({ isLoggedIn = false, onSearch = () => {} }) => {
                     placeholder="Search products..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e?.target?.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-transparent border-0 focus:ring-0 rounded-full"
+                    className="w-full pl-12 pr-4 py-2 bg-transparent border-0 focus:ring-0 rounded-full"
                   />
                   {searchQuery && (
                     <button
