@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 
 const desktopImages = [
@@ -14,17 +12,21 @@ const mobileImages = [
     '/assets/banner/mobileseccond.png',
     '/assets/banner/mobilethird.png',
     '/assets/banner/mobilefourth.png'
-
 ];
 
 function useIsMobile() {
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [isMobile, setIsMobile] = useState(false);  // ✅ Initialize as false
+    const [mounted, setMounted] = useState(false);
+
     useEffect(() => {
+        setMounted(true);
         const handleResize = () => setIsMobile(window.innerWidth < 768);
+        handleResize();  // Set initial value
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
-    return isMobile;
+
+    return mounted ? isMobile : false;  // ✅ Only return after mount
 }
 
 const HeroSection = () => {
@@ -43,16 +45,16 @@ const HeroSection = () => {
     const prevSlide = () => setCurrent((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
 
     return (
-       <section className="relative h-full md:h-[103vh] w-full overflow-hidden flex items-center justify-center bg-black"
->
- <img
-  src={sliderImages[current]}
-  alt={`Hero Slide ${current + 1}`}
-className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
-  style={{
-    objectPosition: 'center center'
-  }}
-/>
+       <section className="relative h-screen md:h-[103vh] w-full overflow-hidden flex items-center justify-center bg-black">
+           <img
+              src={sliderImages[current]}
+              alt={`Hero Slide ${current + 1}`}
+              className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
+              style={{
+                objectPosition: 'center center'
+              }}
+           />
+
             {/* Navigation Arrows */}
             {!isMobile && sliderImages.length > 1 && (
                 <>
@@ -72,6 +74,7 @@ className="absolute inset-0 w-full h-full object-cover transition-all duration-1
                     </button>
                 </>
             )}
+
             {/* Dots */}
             {!isMobile && sliderImages.length > 1 && (
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
@@ -88,4 +91,5 @@ className="absolute inset-0 w-full h-full object-cover transition-all duration-1
         </section>
     );
 };
+
 export default HeroSection;
