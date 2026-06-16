@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const desktopImages = [
-  '/assets/banner/1.jpg',
-  '/assets/banner/2.jpg',
-  '/assets/banner/3.jpg',
-  '/assets/banner/4.jpg',
-  '/assets/banner/5.jpg',
+  '/assets/banner/1.png',
+  '/assets/banner/2.png',
+  '/assets/banner/3.png',
+  '/assets/banner/4.png',
+  '/assets/banner/5.png',
 ];
 
 const mobileImages = [
@@ -33,12 +33,12 @@ function useIsMobile() {
 // ✅ DESKTOP HERO SECTION
 const DesktopHero = ({ current, setCurrent, nextSlide, prevSlide }) => {
     return (
-        <section className="relative w-full h-[103vh] overflow-hidden flex items-center justify-center bg-black">
+        <section className="relative w-full h-[99vh] overflow-hidden flex items-center justify-center bg-black">
             <img
                 src={desktopImages[current]}
                 alt={`Hero Slide ${current + 1}`}
                 className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
-                style={{ objectPosition: 'center center' }}
+                style={{ objectPosition:  'center 30%'}}
             />
 
             {/* Navigation Arrows */}
@@ -75,12 +75,12 @@ const DesktopHero = ({ current, setCurrent, nextSlide, prevSlide }) => {
 // ✅ MOBILE HERO SECTION
 const MobileHero = ({ current }) => {
     return (
-        <section className="relative w-full h-[100dvh] overflow-hidden flex items-center justify-center bg-black">
+        <section className="relative w-full h-[87vh] overflow-hidden flex items-center justify-center bg-black">
             <img
                 src={mobileImages[current]}
                 alt={`Hero Slide ${current + 1}`}
                 className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
-                style={{ objectPosition: 'center center' }}
+                style={{ objectPosition: 'center 30%' }}
             />
         </section>
     );
