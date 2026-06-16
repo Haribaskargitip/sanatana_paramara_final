@@ -79,7 +79,7 @@ const MobileHero = ({ current }) => {
             <img
                 src={mobileImages[current]}
                 alt={`Hero Slide ${current + 1}`}
-                className="absolute inset-0 w-full h-full object-contains transition-all duration-1000"
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
                 style={{ objectPosition: 'center center' }}
             />
         </section>
