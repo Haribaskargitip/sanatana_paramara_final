@@ -43,19 +43,12 @@ const HeroSection = () => {
     const prevSlide = () => setCurrent((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
 
     return (
-       <section
-  className="relative h-[65vh] md:h-screen w-full overflow-hidden flex items-center justify-center bg-black"
+       <section className="relative h-full md:h-[103vh] w-full overflow-hidden flex items-center justify-center bg-black"
 >
  <img
   src={sliderImages[current]}
   alt={`Hero Slide ${current + 1}`}
-  className="
-    absolute inset-0
-    w-full h-full
-    object-cover
-    md:object-center
-    transition-all duration-1000
-  "
+className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
   style={{
     objectPosition: 'center center'
   }}
