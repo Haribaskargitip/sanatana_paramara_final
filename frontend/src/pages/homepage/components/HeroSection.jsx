@@ -75,12 +75,12 @@ const DesktopHero = ({ current, setCurrent, nextSlide, prevSlide }) => {
 // ✅ MOBILE HERO SECTION
 const MobileHero = ({ current }) => {
     return (
-        <section className="relative w-full h-[87vh] overflow-hidden flex items-center justify-center bg-black">
+        <section className="relative w-full h-[89vh] overflow-hidden flex items-center justify-center bg-black">
             <img
                 src={mobileImages[current]}
                 alt={`Hero Slide ${current + 1}`}
                 className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
-                style={{ objectPosition: 'center 30%' }}
+                // style={{ objectPosition: 'center center' }}
             />
         </section>
     );
