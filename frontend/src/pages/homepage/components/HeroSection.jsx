@@ -45,15 +45,21 @@ const HeroSection = () => {
     const prevSlide = () => setCurrent((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
 
     return (
-       <section className="relative h-screen md:h-[103vh] w-full overflow-hidden flex items-center justify-center bg-black">
-           <img
-              src={sliderImages[current]}
-              alt={`Hero Slide ${current + 1}`}
-              className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
-              style={{
-                objectPosition: 'center center'
-              }}
-           />
+       <section className="relative w-full overflow-hidden flex items-center justify-center bg-black"
+  style={{
+    height: isMobile ? '100dvh' : '103vh'  // dvh = dynamic viewport height
+  }}
+>
+  <img
+    src={sliderImages[current]}
+    alt={`Hero Slide ${current + 1}`}
+    className={`absolute inset-0 w-full h-full transition-all duration-1000 ${
+      isMobile ? 'object-contain' : 'object-cover'
+    }`}
+    style={{
+      objectPosition: 'center center'
+    }}
+  />
 
             {/* Navigation Arrows */}
             {!isMobile && sliderImages.length > 1 && (
