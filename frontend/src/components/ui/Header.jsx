@@ -175,7 +175,7 @@ const Header = ({ isLoggedIn = false, onSearch = () => {} }) => {
             </nav>
 
             {/* Search Bar - Centered */}
-            <div className="flex-1 w-full max-w-lg mx-8 hidden md:block">
+           <div className="w-[500px] mx-8 hidden md:block">
               <form onSubmit={handleSearch} className="relative">
                 <div className="relative bg-muted/50 rounded-full border border-border hover:border-primary/50 focus-within:border-primary transition-colors duration-300">
                   <Icon name="Search" size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -184,7 +184,7 @@ const Header = ({ isLoggedIn = false, onSearch = () => {} }) => {
                     placeholder="Search products..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e?.target?.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-transparent border-0 focus:ring-0 rounded-full"
+                    className="w-full h-12 pl-12 pr-4 bg-transparent border-0 focus:ring-0 rounded-full"
                   />
                   {searchQuery && (
                     <button
