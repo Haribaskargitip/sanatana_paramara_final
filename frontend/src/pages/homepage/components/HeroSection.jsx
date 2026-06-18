@@ -9,10 +9,11 @@ const desktopImages = [
 ];
 
 const mobileImages = [
-  '/assets/banner/mobilefirst.png',
-  '/assets/banner/mobileseccond.png',
-  '/assets/banner/mobilethird.png',
-  '/assets/banner/mobilefourth.png'
+  '/assets/banner/mobile/1.png',
+  '/assets/banner/mobile/2.png',
+  '/assets/banner/mobile/3.png',
+  '/assets/banner/mobile/4.png',
+  '/assets/banner/mobile/5.png',
 ];
 
 function useIsMobile() {
@@ -33,12 +34,12 @@ function useIsMobile() {
 // ✅ DESKTOP HERO SECTION
 const DesktopHero = ({ current, setCurrent, nextSlide, prevSlide }) => {
     return (
-        <section className="relative w-full h-[99vh] overflow-hidden flex items-center justify-center bg-black">
+        <section className="relative w-full h-[calc(100vh-110px)] overflow-hidden flex items-center justify-center bg-black">
             <img
                 src={desktopImages[current]}
                 alt={`Hero Slide ${current + 1}`}
                 className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
-                style={{ objectPosition:  'center 30%'}}
+                style={{ objectPosition: 'center top'}}
             />
 
             {/* Navigation Arrows */}
@@ -75,12 +76,14 @@ const DesktopHero = ({ current, setCurrent, nextSlide, prevSlide }) => {
 // ✅ MOBILE HERO SECTION
 const MobileHero = ({ current }) => {
     return (
-        <section className="relative w-full h-[70vh] overflow-hidden flex items-center justify-center bg-black">
+        <section 
+            className="relative w-full overflow-hidden flex items-center justify-center bg-[#F8FDF8]"
+            style={{ aspectRatio: '1080 / 1350', height: 'auto' }}
+        >
             <img
                 src={mobileImages[current]}
                 alt={`Hero Slide ${current + 1}`}
-                className="absolute inset-0 w-full h-full transition-all duration-1000"
-                style={{ objectPosition: 'center center' }}
+                className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
             />
         </section>
     );
@@ -89,15 +92,14 @@ const MobileHero = ({ current }) => {
 // ✅ MAIN HERO COMPONENT
 const HeroSection = () => {
     const isMobile = useIsMobile();
-    const images = isMobile ? mobileImages : desktopImages;
     const [current, setCurrent] = useState(0);
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setCurrent((prev) => (prev + 1) % images.length);
+            setCurrent((prev) => (prev + 1) % desktopImages.length);
         }, 4000);
         return () => clearInterval(timer);
-    }, [images.length]);
+    }, []);
 
     const nextSlide = () => setCurrent((prev) => (prev + 1) % desktopImages.length);
     const prevSlide = () => setCurrent((prev) => (prev - 1 + desktopImages.length) % desktopImages.length);
