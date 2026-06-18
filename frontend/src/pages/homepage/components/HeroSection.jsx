@@ -10,11 +10,14 @@ const desktopImages = [
 
 const mobileImages = [
   '/assets/banner/mobilefirst.png',
-  '/assets/banner/mobileseccond.png',
+  '/assets/banner/mobilesecond.png',
   '/assets/banner/mobilethird.png',
   '/assets/banner/mobilefourth.png',
   '/assets/banner/mobilefive.png'
 ];
+
+
+
 
 function useIsMobile() {
     const [isMobile, setIsMobile] = useState(false);
