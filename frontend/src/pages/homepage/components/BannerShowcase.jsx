@@ -56,7 +56,7 @@ const BannerShowcase = () => {
               </div>
 
               {/* Image */}
-              <div className="h-[240px] overflow-hidden">
+              <div className="h-[260px] overflow-hidden">
                 <BannerImageSlider
                   images={category.images}
                   className="h-full w-full"

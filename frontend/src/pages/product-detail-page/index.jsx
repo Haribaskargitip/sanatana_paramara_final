@@ -16,6 +16,20 @@ import TrustCertificates from '../../components/TrustCertificates';
 import apiClient from '../../services/api';
 import { resolveImageUrl } from '../../lib/resolveImageUrl';
 
+const STATIC_PRODUCT_MAP = {
+  '39': 'Groundnut Oil',
+  '38': 'Dry Coconut Oil',
+  '18': 'Saflower Oil',
+  '19': 'Sesame Oil',
+  '23': 'Mustard Oil',
+  '21': 'Niger Oil',
+  '20': 'Flax Seed Oil',
+  '22': 'Virgin Coconut Oil',
+  '101': 'Almond Oil',
+  '102': 'Deepam Oil',
+  '103': 'Castor Oil'
+};
+
 const ProductDetailPage = () => {
   const [searchParams] = useSearchParams();
   const { id: urlParamId } = useParams();
@@ -40,21 +54,46 @@ const ProductDetailPage = () => {
 
         // Try to fetch from backend API first
         let productData = null;
-        try {
-          productData = await productApi.getById(productId);
-          console.log('Successfully loaded product from API:', productData);
-          console.log('Product image data:', {
-            images: productData?.images,
-            gallery: productData?.gallery,
-            image: productData?.image,
-            imageUrl: productData?.imageUrl,
-            image_path: productData?.image_path,
-            thumbnailUrl: productData?.thumbnailUrl
-          });
-        } catch (apiError) {
-          console.warn('Backend API failed, falling back to local data:', apiError?.message);
+        
+        // 1. If it's a number, try fetching by ID first
+        if (productId && !isNaN(productId)) {
+          try {
+            productData = await productApi.getById(productId);
+            console.log('Successfully loaded product from API by ID:', productData);
+          } catch (apiError) {
+            console.warn(`Backend API getById failed for ID ${productId}:`, apiError?.message);
+          }
+        }
 
-          // Fallback to hardcoded data from dataService
+        // 2. If getById failed or productId is not a number, try searching by name or fallback mapping
+        if (!productData) {
+          try {
+            // Check if we have a name mapped for this static ID, or use the productId directly if it's a name
+            const searchName = STATIC_PRODUCT_MAP[String(productId)] || (isNaN(productId) ? productId : null);
+            
+            if (searchName) {
+              console.log(`Attempting fallback search by name: "${searchName}"`);
+              const results = await productApi.search(searchName);
+              if (results && results.length > 0) {
+                // Find the best match by name
+                const match = results.find(p =>
+                  p.name.toLowerCase().includes(searchName.toLowerCase()) ||
+                  searchName.toLowerCase().includes(p.name.toLowerCase())
+                );
+                if (match) {
+                  productData = match;
+                  console.log('Successfully loaded product by fallback name search:', productData);
+                }
+              }
+            }
+          } catch (searchError) {
+            console.warn('Fallback name search failed:', searchError?.message);
+          }
+        }
+
+        // 3. If still not found, check local fallback data
+        if (!productData) {
+          console.warn('Product not found in API, checking fallback local data...');
           const response = await dataService.getProducts();
           const products = response?.data || [];
           productData = products.find(p => p.id === productId || p.id === parseInt(productId));
@@ -63,14 +102,6 @@ const ProductDetailPage = () => {
             throw new Error(`Product with ID ${productId} not found`);
           }
           console.log('Loaded product from fallback data:', productData);
-          console.log('Fallback product image data:', {
-            images: productData?.images,
-            gallery: productData?.gallery,
-            image: productData?.image,
-            imageUrl: productData?.imageUrl,
-            image_path: productData?.image_path,
-            thumbnailUrl: productData?.thumbnailUrl
-          });
         }
 
         // Normalize product data to expected format
