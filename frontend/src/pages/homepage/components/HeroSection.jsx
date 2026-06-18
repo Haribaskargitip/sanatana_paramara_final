@@ -9,11 +9,10 @@ const desktopImages = [
 ];
 
 const mobileImages = [
-  '/assets/banner/mobile/1.png',
-  '/assets/banner/mobile/2.png',
-  '/assets/banner/mobile/3.png',
-  '/assets/banner/mobile/4.png',
-  '/assets/banner/mobile/5.png',
+  '/assets/banner/mobilefirst.png',
+  '/assets/banner/mobileseccond.png',
+  '/assets/banner/mobilethird.png',
+  '/assets/banner/mobilefourth.png'
 ];
 
 function useIsMobile() {
